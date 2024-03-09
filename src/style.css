@@ -16,4 +16,5 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     transform: translateY(80px);
+    pointer-events: none;
 }

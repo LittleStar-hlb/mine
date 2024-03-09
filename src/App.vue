@@ -9,6 +9,7 @@ const LayoutRef = ref<HTMLCanvasElement | null>(null);
 const MineRef = ref<HTMLCanvasElement | null>(null);
 const TimeRef = ref<HTMLCanvasElement | null>(null);
 const ResetRef = ref<HTMLCanvasElement | null>(null);
+const containerRef = ref<HTMLDivElement | null>(null);
 
 const offsetX = 25;
 const offsetY = 25;
@@ -188,6 +189,8 @@ function initProgress() {
     });
 
     Promise.all(promises).then(() => {
+        if (!containerRef.value) return;
+        containerRef.value.style.pointerEvents = "auto";
         initView();
     });
 }
@@ -204,7 +207,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="container">
+    <div ref="containerRef" class="container">
         <form class="title" @submit.prevent="submitClickHandler">
             <label for="row"
                 >宽<input v-model.number="rowValue" type="text" id="row"
@@ -322,10 +325,6 @@ main {
     border: 2px solid #808080;
     border-right-color: #fff;
     border-bottom-color: #fff;
-}
-
-main > canvas {
-    pointer-events: "auto";
 }
 
 .progressBar {
