@@ -1,6 +1,6 @@
-import { mineEntry } from "./types/mineEntry";
-import { winmineBuilder } from "./winmineBuilder";
-import { Grid } from "./class";
+import {mineEntry} from "./types/mineEntry";
+import {winmineBuilder} from "./winmineBuilder";
+import {Grid} from "./class";
 
 export class gameMinesweeper {
     private xxDirection = [-1, 0, 1, 1, 1, 0, -1, -1];
@@ -18,8 +18,10 @@ export class gameMinesweeper {
 
     private flagBoard: boolean[][] = new Array(0);
     private needHandleGrid: Array<Grid> = [];
-    private _dead: () => void = (): void => {};
-    private _win: () => void = (): void => {};
+    private _dead: () => void = (): void => {
+    };
+    private _win: () => void = (): void => {
+    };
 
     public initGame(
         width: number,
@@ -40,7 +42,8 @@ export class gameMinesweeper {
         this._mineNum = mineNum;
         this.leftBlock = width * height - mineNum;
         // this._dead = () => {};
-        // this._win = () => {};
+        this._win = () => {
+        };
 
         return this.actualBoard;
     }
@@ -56,6 +59,11 @@ export class gameMinesweeper {
         if (this.actualBoard[y][x] == mineEntry.flag) {
             return [];
         }
+
+        if (this.actualBoard[y][x] !== mineEntry.block) {
+            return [];
+        }
+
 
         if (this.expectBoard[y][x] == mineEntry.mine) {
             this.isDead = true;
@@ -129,16 +137,17 @@ export class gameMinesweeper {
                 if (this.outOfBoard(xx, yy) || this.flagBoard[yy][xx]) {
                     continue;
                 }
-
-                // 不为空格
-                if (this.expectBoard[yy][xx] !== mineEntry.empty) {
-                    this.flagBoard[yy][xx] = true;
-                    this.needHandleGrid.push(new Grid(xx, yy));
+                // 已经点击过
+                if (this.actualBoard[yy][xx] !== mineEntry.block) {
                     continue;
                 }
 
                 this.flagBoard[yy][xx] = true;
                 this.needHandleGrid.push(new Grid(xx, yy));
+                // 不为空格 则不进一步拓展
+                if (this.expectBoard[yy][xx] !== mineEntry.empty) {
+                    continue;
+                }
 
                 queue.push(new Grid(xx, yy));
             }
