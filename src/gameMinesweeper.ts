@@ -1,6 +1,6 @@
-import {mineEntry} from "./types/mineEntry";
-import {winmineBuilder} from "./winmineBuilder";
-import {Grid} from "./class";
+import { mineEntry } from "./types/mineEntry";
+import { winmineBuilder } from "./winmineBuilder";
+import { Grid } from "./class";
 
 export class gameMinesweeper {
     private xxDirection = [-1, 0, 1, 1, 1, 0, -1, -1];
@@ -18,10 +18,8 @@ export class gameMinesweeper {
 
     private flagBoard: boolean[][] = new Array(0);
     private needHandleGrid: Array<Grid> = [];
-    private _dead: () => void = (): void => {
-    };
-    private _win: () => void = (): void => {
-    };
+    private _dead: () => void = (): void => { };
+    private _win: () => void = (): void => { };
 
     public initGame(
         width: number,
@@ -41,9 +39,6 @@ export class gameMinesweeper {
         this.height = height;
         this._mineNum = mineNum;
         this.leftBlock = width * height - mineNum;
-        // this._dead = () => {};
-        this._win = () => {
-        };
 
         return this.actualBoard;
     }
@@ -63,7 +58,6 @@ export class gameMinesweeper {
         if (this.actualBoard[y][x] !== mineEntry.block) {
             return [];
         }
-
 
         if (this.expectBoard[y][x] == mineEntry.mine) {
             this.isDead = true;
