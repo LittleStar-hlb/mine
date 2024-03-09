@@ -1,0 +1,23 @@
+{
+  "name": "shaolei",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "vue": "^3.4.15"
+  },
+  "devDependencies": {
+    "@types/postcss-pxtorem": "^6.0.3",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "postcss-pxtorem": "^6.1.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0",
+    "vue-tsc": "^1.8.27"
+  }
+}
