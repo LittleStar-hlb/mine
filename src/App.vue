@@ -13,8 +13,8 @@ const containerRef = ref<HTMLDivElement | null>(null);
 
 const offsetX = 25;
 const offsetY = 25;
-const timeOffsetX = 13;
-const timeOffsetY = 23;
+const countOffsetX = 13;
+const countOffsetY = 23;
 const resetOffsetX = 21;
 const resetOffsetY = 21;
 
@@ -119,13 +119,15 @@ function drawImageOnTimeOrMine(
     const n: Array<string> = num.toString().padStart(3, "0").split("");
 
     if (context) {
+        HtmlRef.value.width = countOffsetX * n.length;
+        HtmlRef.value.height = countOffsetY;
         context.clearRect(0, 0, HtmlRef.value.width, HtmlRef.value.height);
         for (let i = 0; i < n.length; i++) {
             const image =
                 link2Image.get(num2Entry.get(parseInt(n[i])) || 0) ||
                 new Image();
 
-            context.drawImage(image, i * timeOffsetX, 0 * timeOffsetY);
+            context.drawImage(image, i * countOffsetX, 0 * countOffsetY);
         }
     }
 }
@@ -134,12 +136,8 @@ function drawGridAndBlocks(rowLen: number, colLen: number) {
     if (!LayoutRef.value || !TimeRef.value || !MineRef.value || !ResetRef.value)
         return;
 
-    LayoutRef.value.width = rowLen * 25;
-    LayoutRef.value.height = colLen * 25;
-    TimeRef.value.width = timeOffsetX * 3;
-    TimeRef.value.height = timeOffsetY;
-    MineRef.value.width = timeOffsetX * 3;
-    MineRef.value.height = timeOffsetY;
+    LayoutRef.value.width = rowLen * offsetX;
+    LayoutRef.value.height = colLen * offsetY;
     ResetRef.value.width = resetOffsetX;
     ResetRef.value.height = resetOffsetY;
 
