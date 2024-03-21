@@ -43,6 +43,16 @@ minesweeper.dead(() => {
 
 minesweeper.win(() => {
     if (!LayoutRef.value) return;
+    const rowLen = rowValue.value;
+    const colLen = colValue.value;
+
+    initBlocks(rowLen, colLen, (x: number, y: number) => {
+        if (mineeee[y][x] === 12) {
+            mineeee[y][x] = 13;
+            drawImageOnBlock(x, y);
+        }
+    });
+
     LayoutRef.value.style.pointerEvents = "none";
     gameSubject.end();
     drawReset(0);
@@ -158,20 +168,26 @@ function drawReset(mapkey: number) {
     }
 }
 
-function initView() {
-    let rowLen = rowValue.value;
-    let colLen = colValue.value;
+// function drawView(rowLen: number, colLen: number) {}
 
-    mineeee = minesweeper.initGame(
-        rowValue.value,
-        colValue.value,
-        mineValue.value
-    );
+function initView() {
+    const rowLen = rowValue.value;
+    const colLen = colValue.value;
+    const mineLen = mineValue.value;
+
+    mineeee = minesweeper.initGame(rowLen, colLen, mineLen);
+
     drawGridAndBlocks(rowLen, colLen);
 
+    initBlocks(rowLen, colLen, (x: number, y: number) => {
+        drawImageOnBlock(x, y);
+    });
+}
+
+function initBlocks(rowLen: number, colLen: number, callback: Function) {
     for (let y = 0; y < colLen; y++) {
         for (let x = 0; x < rowLen; x++) {
-            drawImageOnBlock(x, y);
+            callback(x, y);
         }
     }
 }
